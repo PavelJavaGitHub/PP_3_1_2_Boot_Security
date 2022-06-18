@@ -9,6 +9,8 @@ public interface UserService {
 
     User get(Long id);
 
+    User getByEmail(String email);
+
     void update(Long id, User user);
 
     void delete(Long id);
