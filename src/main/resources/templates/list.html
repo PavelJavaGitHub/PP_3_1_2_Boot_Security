@@ -7,7 +7,7 @@
 <body>
 
 <div th:each="user : ${users}">
-  <a th:href="@{/users/{id}(id=${user.getId()})}"
+  <a th:href="@{/user/{id}(id=${user.getId()})}"
      th:text="${'Name: ' + user.getFirstName() + ' ' + user.getLastName()}">user</a>
 </div>
 
@@ -17,7 +17,7 @@
 <input type="button" value="Create user"
        onclick="window.location.href='/admin/create'">
 <br/>
-<input type="button" value="Back to menu"
+<input type="button" value="Back to admin menu"
             onclick="window.location.href='/admin'">
 <br/>
 <br/>
