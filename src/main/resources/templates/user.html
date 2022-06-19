@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>User</title>
+  <title>User</title>
 </head>
 <body>
 <h1>User, welcome spring boot security page!</h1>
@@ -13,11 +13,11 @@
 <p th:text="${'email: ' + user.getEmail()}">VALUE</p>
 
 <form th:action="@{/user/{id}/edit(id=${user.getId()})}">
-    <input type="submit" value="Edit" />
+  <input type="submit" value="Edit" />
 </form>
 
 <form th:method="DELETE" th:action="@{/user/{id}/delete(id=${user.getId()})}">
-    <input type="submit" value="Delete"/>
+  <input type="submit" value="Delete"/>
 </form>
 
 <br/>

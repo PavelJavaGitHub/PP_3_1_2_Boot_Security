@@ -19,6 +19,34 @@
   <label for="email">Enter email: </label>
   <input type="text" th:field="*{email}" id="email"/>
   <br/>
+
+  <label for="password">Enter email: </label>
+  <input type="text" th:field="*{password}" id="password"/>
+  <br/>
+
+  <div class="form-group">
+    <ul>
+      <li th:each="role : ${allRoles}">
+        <input type="checkbox" th:field="*{roles}" th:value="${role}" />
+        <label th:for="${#ids.prev('roles')}" th:text="#{${role}}"></label>
+      </li>
+    </ul>
+  </div>
+
+
+<!--  <tr>-->
+<!--    <td>Certificate</td>-->
+<!--    <td>-->
+<!--      <th:block th:each="role : ${roles}">-->
+<!--        <input type="checkbox" name="role" th:value="${role.id}"/>-->
+<!--        <label th:text="${role.name}"></label>-->
+<!--      </th:block>-->
+<!--    </td>-->
+<!--  </tr>-->
+
+
+
+
   <input type="submit" value="Update"/>
 </form>
 
