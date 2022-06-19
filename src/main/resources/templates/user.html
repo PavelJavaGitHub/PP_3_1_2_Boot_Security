@@ -13,7 +13,7 @@
 <p th:text="${'email: ' + user.getEmail()}">VALUE</p>
 
 <form th:action="@{/user/{id}/edit(id=${user.getId()})}">
-    <input type="submit" value="EditButton" />
+    <input type="submit" value="Edit" />
 </form>
 
 <form th:method="DELETE" th:action="@{/user/{id}/delete(id=${user.getId()})}">
@@ -22,7 +22,7 @@
 
 <br/>
 <input type="button" value="Logout"
-       onclick="window.location.href='logout'">
+       onclick="window.location.href='/logout'">
 <br/>
 <input type="button" value="Main page"
        onclick="window.location.href='/index'">
