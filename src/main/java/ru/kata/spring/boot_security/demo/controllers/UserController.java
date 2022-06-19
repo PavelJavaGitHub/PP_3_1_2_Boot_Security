@@ -1,21 +1,20 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.models.User;
-import ru.kata.spring.boot_security.demo.services.UserService;
 
 @Controller
 public class UserController {
 
-    private final UserService userService;
+    private final UserDao userDao;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     @GetMapping("/")
@@ -35,13 +34,13 @@ public class UserController {
 
     @GetMapping("user/{id}")
     public String userByID(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userService.get(id));
+        model.addAttribute("user", userDao.get(id));
         return "user";
     }
 
     @GetMapping("/admin/list")
     public String list(Model model) {
-        model.addAttribute("users", userService.list());
+        model.addAttribute("users", userDao.list());
         return "list";
     }
 
@@ -52,25 +51,25 @@ public class UserController {
 
     @PostMapping("/admin")
     public String create(@ModelAttribute("user") User user) {
-        userService.save(user);
+        userDao.save(user);
         return "redirect:/admin/list";
     }
 
     @GetMapping("/user/{id}/edit")
     public String editForm(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userService.get(id));
+        model.addAttribute("user", userDao.get(id));
         return "edit";
     }
 
     @PostMapping("/user/{id}/edit")
     public String edit(@ModelAttribute("user") User user, @PathVariable("id") long id) {
-        userService.update(id, user);
+        userDao.update(id, user);
         return "redirect:/admin/list";
     }
 
     @PostMapping("user/{id}/delete")
     public String delete (@PathVariable("id") long id) {
-        userService.delete(id);
+        userDao.delete(id);
         return "redirect:/admin/list";
     }
 }

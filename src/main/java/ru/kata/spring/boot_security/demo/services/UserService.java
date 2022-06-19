@@ -1,17 +1,24 @@
 package ru.kata.spring.boot_security.demo.services;
 
-import ru.kata.spring.boot_security.demo.models.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import ru.kata.spring.boot_security.demo.dao.UserDao;
 
-import java.util.List;
+@Service
+public class UserService implements UserDetailsService {
 
-public interface UserService {
-    void save(User user);
+    private final UserDao userDao;
 
-    User get(Long id);
+    @Autowired
+    public UserService(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
-    void update(Long id, User user);
-
-    void delete(Long id);
-
-    List<User> list();
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userDao.getByEmail(username);
+    }
 }
