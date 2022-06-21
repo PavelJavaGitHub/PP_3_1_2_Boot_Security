@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,7 +36,7 @@ public class AdminController {
     @GetMapping("/create")
     public String createForm(@ModelAttribute("user") User user, Model model) {
         model.addAttribute("allRoles", Role.values());
-        return "editNew";
+        return "creationForm";
     }
 
     @PostMapping

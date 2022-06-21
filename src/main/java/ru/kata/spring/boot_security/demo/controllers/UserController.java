@@ -39,7 +39,7 @@ public class UserController {
     public String editForm(@PathVariable("id") long id, Model model) {
         model.addAttribute("user", userService.get(id));
         model.addAttribute("allRoles", Role.values());
-        return "editNew";
+        return "creationForm";
     }
 
     @PostMapping("/{id}/edit")
