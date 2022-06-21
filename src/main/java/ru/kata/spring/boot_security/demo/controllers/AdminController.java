@@ -11,47 +11,39 @@ import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
 @Controller
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/admin")
+public class AdminController {
 
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
+    public AdminController(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping
-    public String user(@AuthenticationPrincipal User user, Model model) {
-        model.addAttribute("user", user);
-        return "user";
+    public String admin() {
+        return "admin";
     }
 
-    @GetMapping("/{id}")
-    public String userByID(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userService.get(id));
-        return "user";
+    @GetMapping("/list")
+    public String list(Model model) {
+        model.addAttribute("users", userService.list());
+        return "list";
     }
 
-    @GetMapping("/{id}/edit")
-    public String editForm(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userService.get(id));
+    @GetMapping("/create")
+    public String createForm(@ModelAttribute("user") User user, Model model) {
         model.addAttribute("allRoles", Role.values());
         return "editNew";
     }
 
-    @PostMapping("/{id}/edit")
-    public String userSave(@ModelAttribute("user") User user) {
+    @PostMapping
+    public String create(@ModelAttribute("user") User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.save(user);
-        return "redirect:/admin/list";
-    }
-
-    @PostMapping("/{id}/delete")
-    public String delete (@PathVariable("id") long id) {
-        userService.delete(id);
-        return "redirect:/admin/list";
+        return "redirect:admin/list";
     }
 }
