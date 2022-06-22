@@ -26,20 +26,20 @@ public class UserController {
     @GetMapping
     public String user(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", user);
-        return "user";
+        return "bootstrap/user";
     }
 
     @GetMapping("/{id}")
     public String userByID(@PathVariable("id") long id, Model model) {
         model.addAttribute("user", userDetailsServiceImpl.get(id));
-        return "user";
+        return "bootstrap/user";
     }
 
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable("id") long id, Model model) {
         model.addAttribute("user", userDetailsServiceImpl.get(id));
         model.addAttribute("allRoles", Role.values());
-        return "creationForm";
+        return "bootstrap/creationForm";
     }
 
     @PostMapping("/{id}/edit")

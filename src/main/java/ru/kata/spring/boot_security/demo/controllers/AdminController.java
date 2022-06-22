@@ -24,19 +24,19 @@ public class AdminController {
 
     @GetMapping
     public String admin() {
-        return "admin";
+        return "bootstrap/admin";
     }
 
     @GetMapping("/list")
     public String list(Model model) {
         model.addAttribute("users", userDetailsServiceImpl.list());
-        return "list";
+        return "bootstrap/list";
     }
 
     @GetMapping("/create")
     public String createForm(@ModelAttribute("user") User user, Model model) {
         model.addAttribute("allRoles", Role.values());
-        return "creationForm";
+        return "bootstrap/creationForm";
     }
 
     @PostMapping
