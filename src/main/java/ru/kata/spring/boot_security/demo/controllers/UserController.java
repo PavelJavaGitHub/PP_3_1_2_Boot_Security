@@ -8,18 +8,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
-import ru.kata.spring.boot_security.demo.services.UserService;
+import ru.kata.spring.boot_security.demo.services.UserDetailsServiceImpl;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserService userService;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
-        this.userService = userService;
+    public UserController(UserDetailsServiceImpl userDetailsServiceImpl, PasswordEncoder passwordEncoder) {
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -31,13 +31,13 @@ public class UserController {
 
     @GetMapping("/{id}")
     public String userByID(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userService.get(id));
+        model.addAttribute("user", userDetailsServiceImpl.get(id));
         return "user";
     }
 
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userService.get(id));
+        model.addAttribute("user", userDetailsServiceImpl.get(id));
         model.addAttribute("allRoles", Role.values());
         return "creationForm";
     }
@@ -45,13 +45,13 @@ public class UserController {
     @PostMapping("/{id}/edit")
     public String userSave(@ModelAttribute("user") User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userService.save(user);
+        userDetailsServiceImpl.save(user);
         return "redirect:/admin/list";
     }
 
     @PostMapping("/{id}/delete")
     public String delete (@PathVariable("id") long id) {
-        userService.delete(id);
+        userDetailsServiceImpl.delete(id);
         return "redirect:/admin/list";
     }
 }

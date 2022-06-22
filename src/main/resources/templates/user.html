@@ -12,6 +12,14 @@
 <p th:text="${'age: ' + user.getAge()}">VALUE</p>
 <p th:text="${'email: ' + user.getEmail()}">VALUE</p>
 
+<div>
+    <a th:text="${'Roles: '}"></a>
+    <tr th:each="role : ${user.getRoles()}">
+        <td th:text="${role.name}"></td>
+    </tr>
+</div>
+<br/>
+
 <form th:action="@{/user/{id}/edit(id=${user.getId()})}">
   <input type="submit" value="Edit" />
 </form>

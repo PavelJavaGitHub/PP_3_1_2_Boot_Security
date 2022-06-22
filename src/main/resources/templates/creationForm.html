@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Update user</title>
+    <title>Editing form</title>
 </head>
 <body>
 
@@ -47,12 +47,7 @@
                        required minlength="1" maxlength="20" />
             </div>
         </div>
-
-
         <br/>
-
-
-
         <p>
             <label>Roles:
                 <input type="checkbox" name="roles"
@@ -64,14 +59,8 @@
             </label>
         </p>
 
-<!--        <select name="Roles">-->
-<!--            <option th:each="role : ${allRoles}"-->
-<!--                    th:value="${role}" th:text="${role.name}"></option>-->
-<!--        </select>-->
-
-
         <div>
-            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </div>
 </form>
