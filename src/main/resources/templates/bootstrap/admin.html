@@ -32,7 +32,7 @@
 
             var href=$(this).attr('href');
 
-            $.get(href, function(currentUser, status){
+            $.get(href, function(currentUser){
                 $('#idEdit').val(currentUser.id);
                 $('#firstNameEdit').val(currentUser.firstName);
                 $('#lastNameEdit').val(currentUser.lastName);
@@ -48,9 +48,8 @@
         $('.table #deleteButton').on('click', function(event) {
             event.preventDefault();
             var href=$(this).attr('href');
-            // $('#deleteModal #delRef').attr('href', href);
 
-            $.get(href, function(currentUser, status){
+            $.get(href, function(currentUser){
                 $('#idDelete').val(currentUser.id);
                 $('#firstNameDelete').val(currentUser.firstName);
                 $('#lastNameDelete').val(currentUser.lastName);

@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -8,7 +7,6 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name="Users")
 public class User implements UserDetails {
