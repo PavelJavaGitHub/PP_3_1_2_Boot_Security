@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,26 +24,39 @@ public class AdminController {
     }
 
     @GetMapping
-    public String admin() {
+    public String admin(@AuthenticationPrincipal User user, @ModelAttribute("createdUser") User createdUser, Model model) {
+        model.addAttribute("user", user);
+        model.addAttribute("createdUser", createdUser);
+        model.addAttribute("users", userDetailsServiceImpl.list());
+        model.addAttribute("allRoles", Role.values());
         return "bootstrap/admin";
     }
 
-    @GetMapping("/list")
-    public String list(Model model) {
-        model.addAttribute("users", userDetailsServiceImpl.list());
-        return "bootstrap/list";
-    }
-
-    @GetMapping("/create")
-    public String createForm(@ModelAttribute("user") User user, Model model) {
-        model.addAttribute("allRoles", Role.values());
-        return "bootstrap/creationForm";
-    }
-
-    @PostMapping
+    @PostMapping("/create")
     public String create(@ModelAttribute("user") User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDetailsServiceImpl.save(user);
-        return "redirect:admin/list";
+        return "redirect:/admin";
+    }
+
+
+    @GetMapping("/{id}/edit")
+    public String editForm(@PathVariable("id") long id, Model model) {
+        model.addAttribute("user", userDetailsServiceImpl.get(id));
+        model.addAttribute("allRoles", Role.values());
+        return "bootstrap/admin";
+    }
+
+    @PostMapping("/edit")
+    public String userSave(@ModelAttribute("user") User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userDetailsServiceImpl.save(user);
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/delete")
+    public String delete (@ModelAttribute("user") User user) {
+        userDetailsServiceImpl.delete(user.getId());
+        return "redirect:/admin";
     }
 }
