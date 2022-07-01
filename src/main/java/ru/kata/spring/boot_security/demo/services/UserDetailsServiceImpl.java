@@ -21,25 +21,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    public void save(User user) {
+    public void saveUser(User user) {
         userRepository.save(user);
     }
 
-    public User get(long id) {
-        return userRepository.getById(id);
+    public User getUserById(long id) {
+        return userRepository.findById(id).get();
     }
 
-    public User getOneById(Long id) { return userRepository.findById(id).get(); }
-
-    public User getByEmail(String email) {
-        return userRepository.findByEmail(email).orElse(null);
-    }
-
-    public void delete(long id) {
+    public void deleteUserById(long id) {
         userRepository.deleteById(id);
     }
 
-    public List<User> list() {
+    public List<User> listAllUsers() {
         return userRepository.findAll();
     }
 
