@@ -34,13 +34,13 @@ public class MainController {
 
     @GetMapping("user/{id}")
     public String userByID(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userDetailsServiceImpl.get(id));
+        model.addAttribute("user", userDetailsServiceImpl.getUserById(id));
         return "bootstrap/user";
     }
 
     @RequestMapping("user/getOne")
     @ResponseBody
-    public User getOne(long id) {
-        return userDetailsServiceImpl.getOneById(id);
+    public User getOneUser(long id) {
+        return userDetailsServiceImpl.getUserById(id);
     }
 }
