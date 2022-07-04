@@ -22,25 +22,25 @@ public class MainController {
     }
 
     @GetMapping
-    public String login() {
+    public String showLoginPage() {
         return "redirect:/login";
     }
 
     @GetMapping("/user")
-    public String user(@AuthenticationPrincipal User user, Model model) {
+    public String showUserPage(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", user);
         return "bootstrap/user";
     }
 
     @GetMapping("user/{id}")
-    public String userByID(@PathVariable("id") long id, Model model) {
+    public String showUserPageById(@PathVariable("id") long id, Model model) {
         model.addAttribute("user", userDetailsServiceImpl.getUserById(id));
         return "bootstrap/user";
     }
 
     @RequestMapping("user/getOne")
     @ResponseBody
-    public User getOneUser(long id) {
+    public User getUserById(long id) {
         return userDetailsServiceImpl.getUserById(id);
     }
 }

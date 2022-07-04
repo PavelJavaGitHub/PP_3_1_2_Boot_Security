@@ -37,7 +37,7 @@ public class AdminController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editUserForm(@PathVariable("id") long id, Model model) {
+    public String showEditUserForm(@PathVariable("id") long id, Model model) {
         model.addAttribute("user", userDetailsServiceImpl.getUserById(id));
         model.addAttribute("allRoles", Role.values());
         return "bootstrap/admin";
