@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.UserDetailsServiceImpl;
@@ -16,11 +17,13 @@ public class UserController {
 
     private final UserDetailsServiceImpl userDetailsServiceImpl;
     private final PasswordEncoder passwordEncoder;
+    private final UserDao userDao;
 
     @Autowired
-    public UserController(UserDetailsServiceImpl userDetailsServiceImpl, PasswordEncoder passwordEncoder) {
+    public UserController(UserDetailsServiceImpl userDetailsServiceImpl, PasswordEncoder passwordEncoder, UserDao userDao) {
         this.userDetailsServiceImpl = userDetailsServiceImpl;
         this.passwordEncoder = passwordEncoder;
+        this.userDao = userDao;
     }
 
     @GetMapping
@@ -37,8 +40,9 @@ public class UserController {
 
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable("id") long id, Model model) {
+        System.out.println(userDao.getAllRoles());
         model.addAttribute("user", userDetailsServiceImpl.get(id));
-        model.addAttribute("allRoles", Role.values());
+        model.addAttribute("allRoles", userDao.getAllRoles());
         return "creationForm";
     }
 

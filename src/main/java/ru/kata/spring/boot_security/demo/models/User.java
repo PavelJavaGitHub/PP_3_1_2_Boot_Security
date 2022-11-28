@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Set;
 
 @Entity
-@Table(name="Users")
+@Table(name = "users")
 public class User implements UserDetails {
 
     @Id
@@ -26,10 +26,7 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "roles")
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
-    @Enumerated(EnumType.STRING)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
     public User() {}

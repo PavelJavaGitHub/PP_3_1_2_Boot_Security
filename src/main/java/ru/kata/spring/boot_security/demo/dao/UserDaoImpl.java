@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 
 import javax.persistence.EntityManager;
@@ -44,5 +45,13 @@ public class UserDaoImpl implements UserDao {
 
     public void delete(long id) {
         entityManager.remove(get(id));
+    }
+
+    public Role[] getAllRoles() {
+//        Role[] temp = (Role[]) entityManager.createQuery("from Role").getResultStream().toArray();
+        List<Role> listRoles = (List<Role>) entityManager.createQuery("role as r from Role").getResultList();
+        System.out.println(entityManager.createQuery("role as r from Role").getResultStream().toArray());
+        System.out.println(listRoles);
+        return (Role[]) listRoles.toArray();
     }
 }

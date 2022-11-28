@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.UserDetailsServiceImpl;
@@ -15,11 +16,13 @@ public class AdminController {
 
     private final UserDetailsServiceImpl userDetailsServiceImpl;
     private final PasswordEncoder passwordEncoder;
+    private final UserDao userDao;
 
     @Autowired
-    public AdminController(UserDetailsServiceImpl userDetailsServiceImpl, PasswordEncoder passwordEncoder) {
+    public AdminController(UserDetailsServiceImpl userDetailsServiceImpl, PasswordEncoder passwordEncoder, UserDao userDao) {
         this.userDetailsServiceImpl = userDetailsServiceImpl;
         this.passwordEncoder = passwordEncoder;
+        this.userDao = userDao;
     }
 
     @GetMapping
@@ -35,7 +38,8 @@ public class AdminController {
 
     @GetMapping("/create")
     public String createForm(@ModelAttribute("user") User user, Model model) {
-        model.addAttribute("allRoles", Role.values());
+        System.out.println(userDao.getAllRoles());
+        model.addAttribute("allRoles", userDao.getAllRoles());
         return "creationForm";
     }
 
